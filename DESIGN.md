@@ -51,12 +51,28 @@ The low-noise model confidently isolates the outlier as its own segment. This de
 
 ## Validation and limits
 
-14 tests cover independent sequential-predictive interval evidence, exhaustive partition enumeration at tiny sizes, evidence/prior normalization, interval/boundary/count marginals, complete MAP partition and probability, pointwise mixture variance, sum rules, impossible intervals, sign/translation invariance, large offsets, JSON/CLI and invalid inputs. CI uses Python3.10..3.13 and regenerates/byte-checks the SVG. The SVG shows all observations, posterior means and boundary probabilities with shared observation and probability axes; it has no inferred credible bands or hidden thinning.
+14 initial tests cover independent sequential-predictive interval evidence, exhaustive partition enumeration at tiny sizes, evidence/prior normalization, interval/boundary/count marginals, complete MAP partition and probability, pointwise mixture variance, sum rules, impossible intervals, sign/translation invariance, large offsets, JSON/CLI and invalid inputs. CI uses Python3.10..3.13 and regenerates/byte-checks the SVG. The SVG shows all observations, posterior means and boundary probabilities with shared observation and probability axes; it has no inferred credible bands or hidden thinning.
 
 Inputs:1..120 finite observations and prior mean in[-1e6,1e6]; noise/prior standard deviation in[1e-4,1e4]; p in[1e-6,1-1e-6]; integer min_length1..N and max_segments1..12. Effective cap is min(requested,floor(N/min_length)), returned explicitly. No approximation or posterior pruning is used; probability underflow can still occur for negligible partitions. If posterior normalization/coverage loses more than1e-8, inference fails instead of returning numerically unresolved probabilities. These are floating-point exact finite sums, not symbolic arithmetic or a formal error certificate.
 
-This straightforward implementation scores sliced intervals in O(N³), and combines marginal interval prefixes/suffixes in O(N²*K²), with O(N²+N*K) storage. It does not claim the optimized complexity of a paper or a wall-clock advantage. Small bounded sequences are deliberate. No posterior samples, learned hyperparameters, online alert, multiple-testing control, event labels, causal explanation, real-data calibration or model-misspecification guarantee.
+The interval table uses rolling centered statistics in O(N²), and combines marginal interval prefixes/suffixes in O(N²*K²), with O(N²+N*K) storage. It does not claim the optimized complexity of a paper or a wall-clock advantage. Small bounded sequences are deliberate. No posterior samples, learned hyperparameters, online alert, multiple-testing control, event labels, causal explanation, real-data calibration or model-misspecification guarantee.
 
 ## Sources and attribution
 
 Independent implementation inspired by the independent-segment/product-partition recursions in [Fearnhead, Exact and Efficient Bayesian Inference for Multiple Changepoint Problems, Sections2/3](https://people.csail.mit.edu/siracusa/papers/fearnhead06.pdf). This implementation uses the explicitly conditioned Bernoulli-gap prior above, a capped segment-count forward/backward recurrence and conjugate normal means with fixed known sigma. It does not copy reference code, reproduce the paper's data/simulations, implement its sampling/pruning algorithm or claim identical prior endpoint conventions. Gaussian integration and each recurrence are documented here for inspection. MIT licensed.
+
+## Rolling interval statistics without posterior changes
+
+The score table now extends a running mean/M2 accumulator once for each interval start, rather than slicing and rescanning every candidate interval. Each emitted interval uses exactly the same observation order and conjugate formula as the standalone independent scorer. This removes repeated accumulation while retaining every interval, without a prefix raw-square subtraction that would worsen large-offset cancellation.
+
+`score_work` reports actual scalar observation-accumulation counts for building interval scores, plus the count required to independently rescan those same intervals:
+
+| Interval construction fixture | Intervals scored | Rolling updates | Independent rescans | Avoided updates |
+|---|---|---|---|---|
+| N36,min_length3 (shift demo) | 595 | 663 | 8,330 | 7,667 |
+| N24,min_length1 (outlier demo) | 300 | 300 | 2,600 | 2,300 |
+| N120,min_length1 (maximum N) | 7,260 | 7,260 | 295,240 | 287,980 |
+
+These are mean/M2 observation updates, **not total arithmetic, allocations or wall-clock timings**. Short prefixes needed to reach minimum length are counted even though they are not emitted. The count formula is independently checked against instrumented observation reads. Interval score construction is now O(N²); the unchanged marginal prefix/suffix combinations still cost O(N²*K²), so no claim that the entire inference became linear or that a measured speedup follows.
+
+Seven new tests compare every interval exactly with independent rescans over many lengths, constant/large-offset/extreme inputs, instrumented update counts, exhaustive count formulas, full posterior equality under an injected rescan table, maximum N, no aliases and the public work audit. **21 tests total.** All prior demo fields are exactly unchanged after removing the newly added `score_work` field from each inference result. The SVG is byte-identical and CI still regenerates it. This is an implementation work reduction, not a new inference method, changed prior, posterior pruning or statistical-quality result.
