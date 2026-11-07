@@ -1,4 +1,8 @@
-# SegmentLab
+# SegmentLab technical reference
+
+[Runnable overview](README.md) · [CLI commands](README.md#run-it) · [Reproduce every audit](README.md#reproduce-the-audits)
+
+This reference preserves the model, derivations, detailed fixtures, feature-specific work bounds and limitations. Test counts within development increments are historical; the current suite has90 tests. The README is the short entry point, not a replacement for these qualifications.
 
 **A posterior can be confident about a cut that is only an outlier.** Exact offline Bayesian inference over finite Gaussian changepoint partitions, with constrained-prior normalization, forward/backward sums, segment-count and boundary marginals, a complete MAP partition and posterior segment-mean uncertainty. Every interval's probability and conjugate evidence is retained. Direct joint posterior draws are optional; exact marginals require no sampling. No external dependencies.
 
@@ -217,3 +221,11 @@ These are **expectations under the fitted model**, not observed real-world mista
 A second fixture uses six zeros, the same model settings except cap2, false-cut cost.0001 and missed-cut cost1. Independent thresholding selects every gap[1,2,3,4,5], violating the count cap. Its lower nominal loss.000493637 is outside the feasible set, not a better admissible answer. The constrained choice is[1], with expected loss.049075735; reflection-symmetric near ties can be affected by finite posterior arithmetic. The audit retains both complete decisions, feasibility, every cost, setting, input, risk component, base/increment audit and MAP probability. These examples compare specified objectives, not segmentation quality, causality, real-data calibration or a choice of cost appropriate for any application.
 
 13 new tests bring the total to **80**. Every candidate decision's risk is independently summed over every tiny posterior partition under several constraints/costs; the returned risk matches the feasible optimum and never exceeds MAP's additive risk beyond roundoff. Other checks cover unconstrained threshold equality when feasible, cap violation, minimum length and risk decomposition, forced partitions, cost scaling, monotonic unconstrained cut count as missed cost grows, exact tie/fewer-count/lexicographic policy with controlled marginal inputs, unchanged inference/no mutation, maximum N/extremes, strict validation, CLI and both audit directions. Existing inference, sampling, joint and information audit values and both SVGs remain unchanged.
+
+## CLI contract and documentation consolidation
+
+The parser, strict model loader and dispatch are now separate readable functions. All five model commands share the same exact seven-field JSON contract; options for draw count/seed, pair queries and decision costs remain command-specific. `demo` reads no model file. Each command has purpose/help text, the complete schema and relevant option bounds. Invalid payloads still exit2 without JSON stdout or a traceback. Python API defaults do not weaken the CLI schema.
+
+Ten new tests bring the suite to **90**: top-level purposes, per-command schema help, option defaults/bounds, every missing/extra field and wrong top-level type, malformed/missing input files, exact dispatch arguments for every model command, demo's lack of file reads, unknown dispatch, parser failures and prefixed CLI errors. Existing numerical API outputs, command JSON, all selected audit values and both figures are unchanged. This is a maintainability and discoverability change, not a statistical or speed result.
+
+The README and portfolio case are now concise entry points linking to this retained reference. Every earlier model assumption, derivation, input bound, fixture-selection caveat, floating-point limitation, feature-specific cost and attribution remains in this file. The showcase descriptions are shortened to stop a growing feature inventory from obscuring what the project demonstrates.
