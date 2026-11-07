@@ -18,6 +18,7 @@ python -m segmentlab sample examples/sequence.json --draws 4 --seed 23
 python -m segmentlab joint examples/sequence.json --pairs '[[1,3],[2,4]]'
 python -m segmentlab information examples/sequence.json
 python -m segmentlab decide examples/sequence.json --false-cut-cost 1 --missed-cut-cost 1
+python -m segmentlab predictive examples/sequence.json --queries '[[2,0.0],[3,1.0]]'
 ```
 
 Every model command reads exactly these seven fields, with no extra keys:
@@ -49,6 +50,7 @@ Every model command reads exactly these seven fields, with no extra keys:
 | `sample` / `sample_posterior` | Seeded complete partitions and conditional Gaussian segment means | No MCMC or credible-band/calibration claim; zero visits do not imply zero mass |
 | `joint` / `joint_cuts` | Joint inclusion and both conditional directions for requested cut pairs | Other cuts remain allowed; pairwise summaries do not determine the full law |
 | `information` / `partition_information` | Full partition/count entropy, conditioned-prior KL, binary-cut entropy gap | Lower entropy or higher KL does not prove a correct model |
+| `predictive` / `posterior_predictive` | Same-design replicate mixture density, CDF/survival and5/50/95% quantiles | Not forecasts, leave-one-out scores, anomaly p-values or simultaneous bands |
 | `decide` / `boundary_decision` | Admissible minimum expected false/missed boundary loss; MAP/threshold comparisons | A supplied-loss optimum is not observed real-world accuracy |
 
 All APIs are exported from `segmentlab`. For formulas, exact defaults and output semantics, see [the technical reference](DESIGN.md#explicit-model-and-prior). The reference preserves every fixture, implementation audit, bound and limitation.
@@ -68,6 +70,10 @@ All inference is offline: later observations inform earlier cuts and means. Inte
 
 These are selected development examples, not held-out performance, event detection, causal attribution or real-data calibration. [The reference](DESIGN.md) states every input, setting, selection provenance and numerical qualification.
 
+## Replicate uncertainty is a mixture
+
+`predictive` integrates over covering segments and their Gaussian mean posteriors, then adds fresh observation noise. At an existing index, latent variance and replicate variance are different. A Gaussian with matching mean/variance need not match the mixture density: in a selected five-point outlier fixture, its log density at2 is1.54 nats higher than the exact mixture. [Inputs, two-prior comparison and numerical quantile audit](DESIGN.md#same-design-replicate-predictive-mixtures). Fit uses all observations, including the queried index. These are not forecasts, leave-one-out scores, anomaly p-values or coverage claims.
+
 ## Complete paths versus marginal averages
 
 ![Joint posterior draw audit](assets/joint-draw-audit.svg)
@@ -84,9 +90,10 @@ python examples/render_samples.py /tmp/sample-audit.json --check
 python examples/joint_audit.py > /tmp/joint-audit.json
 python examples/information_audit.py > /tmp/information-audit.json
 python examples/decision_audit.py > /tmp/decision-audit.json
+python examples/predictive_audit.py > /tmp/predictive-audit.json
 ```
 
-**90 tests.** Independent tiny exhaustive partition references check evidence, marginals, MAP, variance, sampler path probabilities, joint queries, entropy/KL and decision risk. Other tests cover sequential conjugate evidence, offsets/extremes, strict inputs, RNG/input isolation, work counts, CLI contracts and SVG geometry/regeneration. CI runs Python3.10..3.13 plus both figure checks. [Detailed validation and limits](DESIGN.md#validation-and-limits).
+**104 tests.** Independent tiny exhaustive partition references check evidence, marginals, MAP, variance, sampler path probabilities, joint queries, entropy/KL and decision risk. Other tests cover sequential conjugate evidence, offsets/extremes, strict inputs, RNG/input isolation, work counts, predictive mixture densities/tails/quantiles, CLI contracts and SVG geometry/regeneration. CI runs Python3.10..3.13 plus both figure checks. [Detailed validation and limits](DESIGN.md#validation-and-limits).
 
 Inputs are bounded:1..120 observations and prior mean in[-1e6,1e6], noise/prior std in[1e-4,1e4], p in[1e-6,1-1e-6], integer minimum length1..N and requested cap1..12. Exact means finite-partition sums **in floating point**, not symbolic arithmetic: negligible mass can underflow, near ties can move and numerical guards are not formal certificates. Full marginal inference costs `O(N²*K²)`; feature-specific costs and output bounds are in the reference. No streaming alerts, forecasts, learned hyperparameters, credible-band coverage or model-misspecification guarantee.
 
@@ -100,3 +107,4 @@ Inputs are bounded:1..120 observations and prior mean in[-1e6,1e6], noise/prior 
 - [Constrained boundary-loss decisions](DESIGN.md#constrained-bayes-decisions-under-boundary-loss)
 
 Independent implementation inspired by [Fearnhead, Exact and Efficient Bayesian Inference for Multiple Changepoint Problems](https://people.csail.mit.edu/siracusa/papers/fearnhead06.pdf). This uses its own explicitly conditioned prior and capped recurrences, not copied code, paper experiments, pruning or a reproduction of the paper's sampling algorithm. [Attribution details](DESIGN.md#sources-and-attribution). MIT licensed.
+- [Same-design replicate predictive mixtures](DESIGN.md#same-design-replicate-predictive-mixtures)
