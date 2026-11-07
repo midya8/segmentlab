@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1010" viewBox="0 0 1120 1010" role="img" aria-labelledby="title desc">
+<title id="title">SegmentLab joint posterior draw audit</title>
+<desc id="desc">First three complete sampled latent paths versus exact pointwise mean; exact and10000-draw count and boundary probabilities and latent variances. Zero K4 visits do not imply zero posterior mass. All points shown, no credible bands.</desc>
+<metadata id="plotted-data">{&quot;boundaries&quot;: [{&quot;cut_before_index&quot;: 1, &quot;exact_probability&quot;: 0.062721956470385, &quot;sample_frequency&quot;: 0.0627}, {&quot;cut_before_index&quot;: 2, &quot;exact_probability&quot;: 0.26251879209703183, &quot;sample_frequency&quot;: 0.2631}, {&quot;cut_before_index&quot;: 3, &quot;exact_probability&quot;: 0.06202234536563646, &quot;sample_frequency&quot;: 0.0597}], &quot;counts&quot;: [{&quot;exact_probability&quot;: 0.6259203959443846, &quot;sample_frequency&quot;: 0.6265, &quot;segments&quot;: 1}, {&quot;exact_probability&quot;: 0.3610115415785973, &quot;sample_frequency&quot;: 0.3615, &quot;segments&quot;: 2}, {&quot;exact_probability&quot;: 0.012952635076597276, &quot;sample_frequency&quot;: 0.012, &quot;segments&quot;: 3}, {&quot;exact_probability&quot;: 0.00011542740042044834, &quot;sample_frequency&quot;: 0.0, &quot;segments&quot;: 4}], &quot;domains&quot;: {&quot;paths&quot;: [-1.2, 1.2], &quot;probability&quot;: [0, 1], &quot;variance&quot;: [0, 0.25]}, &quot;fixture&quot;: {&quot;data&quot;: [-0.7, -0.4, 0.6, 0.9], &quot;draw_count&quot;: 10000, &quot;seed&quot;: 19, &quot;settings&quot;: {&quot;cut_probability&quot;: 0.08, &quot;max_segments_effective&quot;: 4, &quot;max_segments_requested&quot;: 4, &quot;min_length&quot;: 1, &quot;noise_std&quot;: 0.5, &quot;prior_mean&quot;: 0.0, &quot;prior_std&quot;: 3.0}}, &quot;paths&quot;: [{&quot;cuts&quot;: [2], &quot;latent_mean&quot;: [-0.892712020497799, -0.892712020497799, 0.7143926316780109, 0.7143926316780109], &quot;log_partition_posterior_probability&quot;: -1.3798172204394317, &quot;partition_posterior_probability&quot;: 0.25162454067980367, &quot;segments&quot;: [{&quot;conditional_mean&quot;: -0.5424657534246575, &quot;conditional_variance&quot;: 0.12328767123287672, &quot;end&quot;: 2, &quot;sampled_mean&quot;: -0.892712020497799, &quot;start&quot;: 0}, {&quot;conditional_mean&quot;: 0.7397260273972602, &quot;conditional_variance&quot;: 0.12328767123287672, &quot;end&quot;: 4, &quot;sampled_mean&quot;: 0.7143926316780109, &quot;start&quot;: 2}]}, {&quot;cuts&quot;: [1, 2], &quot;latent_mean&quot;: [-0.7098643173705742, 0.049091985281358774, 0.7209070263645437, 0.7209070263645437], &quot;log_partition_posterior_probability&quot;: -5.216412240548047, &quot;partition_posterior_probability&quot;: 0.005426764165900082, &quot;segments&quot;: [{&quot;conditional_mean&quot;: -0.6810810810810811, &quot;conditional_variance&quot;: 0.24324324324324326, &quot;end&quot;: 1, &quot;sampled_mean&quot;: -0.7098643173705742, &quot;start&quot;: 0}, {&quot;conditional_mean&quot;: -0.3891891891891892, &quot;conditional_variance&quot;: 0.24324324324324326, &quot;end&quot;: 2, &quot;sampled_mean&quot;: 0.049091985281358774, &quot;start&quot;: 1}, {&quot;conditional_mean&quot;: 0.7397260273972602, &quot;conditional_variance&quot;: 0.12328767123287672, &quot;end&quot;: 4, &quot;sampled_mean&quot;: 0.7209070263645437, &quot;start&quot;: 2}]}, {&quot;cuts&quot;: [], &quot;latent_mean&quot;: [0.21746184483067588, 0.21746184483067588, 0.21746184483067588, 0.21746184483067588], &quot;log_partition_posterior_probability&quot;: -0.4685320789960814, &quot;partition_posterior_probability&quot;: 0.6259203959443846, &quot;segments&quot;: [{&quot;conditional_mean&quot;: 0.09931034482758619, &quot;conditional_variance&quot;: 0.06206896551724138, &quot;end&quot;: 4, &quot;sampled_mean&quot;: 0.21746184483067588, &quot;start&quot;: 0}]}], &quot;points&quot;: [{&quot;exact_mean&quot;: -0.12893972917823798, &quot;exact_variance&quot;: 0.1860250526425025, &quot;index&quot;: 0, &quot;sample_mean&quot;: -0.13052500295865066, &quot;sample_variance_divisor_draw_count&quot;: 0.19072871847785786}, {&quot;exact_mean&quot;: -0.06817973459312708, &quot;exact_variance&quot;: 0.16792908196006123, &quot;index&quot;: 1, &quot;sample_mean&quot;: -0.06894578846158003, &quot;sample_variance_divisor_draw_count&quot;: 0.1719900646468328}, {&quot;exact_mean&quot;: 0.26671760263446453, &quot;exact_variance&quot;: 0.16749100380298074, &quot;index&quot;: 2, &quot;sample_mean&quot;: 0.26389407132801945, &quot;sample_variance_divisor_draw_count&quot;: 0.16415854375781852}, {&quot;exact_mean&quot;: 0.32660318453585324, &quot;exact_variance&quot;: 0.18514979165188902, &quot;index&quot;: 3, &quot;sample_mean&quot;: 0.3241952899348552, &quot;sample_variance_divisor_draw_count&quot;: 0.1819835520631313}]}</metadata>
+<rect width="1120" height="1010" fill="white"/>
+<text x="28" y="36" text-anchor="start" font-family="Arial,sans-serif" font-size="25" font-weight="600" fill="#251f21">SegmentLab | a sampled partition is not a marginal average</text>
+<text x="28" y="63" text-anchor="start" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#251f21">Seed19; all10,000 draws; four observed values[-.7,-.4,.6,.9]; all8 admissible partitions.</text>
+<text x="28" y="86" text-anchor="start" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">sigma.5, prior mean0 / std3, gap-cut p.08, min_length1, cap4. Offline model-conditional development audit.</text>
+<text x="80" y="128" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">A. First three complete latent-mean draws</text>
+<path d="M80.000 395.000L510.000 395.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="399.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-1.2</text>
+<path d="M80.000 337.500L510.000 337.500" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="341.5" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-0.6</text>
+<path d="M80.000 280.000L510.000 280.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="284.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M80.000 222.500L510.000 222.500" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="226.5" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.6</text>
+<path d="M80.000 165.000L510.000 165.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="169.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1.2</text>
+<text x="133.75" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">0</text>
+<text x="241.25" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">1</text>
+<text x="348.75" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">2</text>
+<text x="456.25" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">3</text>
+<polyline data-series="joint-draw-1" points="80.000,365.552 295.000,365.552 295.000,211.537 510.000,211.537" fill="none" stroke="#585254" stroke-width="2" stroke-dasharray=""/>
+<polyline data-series="joint-draw-2" points="80.000,348.029 187.500,348.029 187.500,275.295 295.000,275.295 295.000,210.913 510.000,210.913" fill="none" stroke="#999396" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline data-series="joint-draw-3" points="80.000,259.160 510.000,259.160" fill="none" stroke="#251f21" stroke-width="2" stroke-dasharray="2 4"/>
+<polyline data-series="exact-latent-mean" points="133.750,292.357 241.250,286.534 348.750,254.440 456.250,248.701" fill="none" stroke="#73a89a" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="exact-latent-mean" data-index="0" data-value="-0.12893972917823798" cx="133.750" cy="292.357" r="4" fill="#73a89a"/>
+<circle data-series="exact-latent-mean" data-index="1" data-value="-0.068179734593127081" cx="241.250" cy="286.534" r="4" fill="#73a89a"/>
+<circle data-series="exact-latent-mean" data-index="2" data-value="0.26671760263446453" cx="348.750" cy="254.440" r="4" fill="#73a89a"/>
+<circle data-series="exact-latent-mean" data-index="3" data-value="0.32660318453585324" cx="456.250" cy="248.701" r="4" fill="#73a89a"/>
+<circle data-series="observation" data-index="0" data-value="-0.69999999999999996" cx="133.750" cy="347.083" r="3" fill="#251f21"/>
+<circle data-series="observation" data-index="1" data-value="-0.40000000000000002" cx="241.250" cy="318.333" r="3" fill="#251f21"/>
+<circle data-series="observation" data-index="2" data-value="0.59999999999999998" cx="348.750" cy="222.500" r="3" fill="#251f21"/>
+<circle data-series="observation" data-index="3" data-value="0.90000000000000002" cx="456.250" cy="193.750" r="3" fill="#251f21"/>
+<text x="80" y="440" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Observation index; path steps occur at segment boundaries.</text>
+<text x="80" y="465" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="600" fill="#251f21">Teal: exact mean. Black dots: observations.</text>
+<text x="80" y="487" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Gray paths: draws1 solid,2 dashed,3 dotted. Not bands.</text>
+<text x="80" y="509" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">First3 in generation order, not selected for fit.</text>
+<text x="625" y="128" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">B. Segment-count probability</text>
+<path d="M625.000 395.000L1055.000 395.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="399.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M625.000 280.000L1055.000 280.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="284.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.5</text>
+<path d="M625.000 165.000L1055.000 165.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="169.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<text x="678.75" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">1</text>
+<text x="786.25" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">2</text>
+<text x="893.75" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">3</text>
+<text x="1001.25" y="417" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">4</text>
+<rect data-series="count-exact" data-index="1" data-value="0.62592039594438464" x="654.750" y="251.038" width="18" height="143.962" fill="#73a89a"/>
+<rect data-series="count-frequency" data-index="1" data-value="0.62649999999999995" x="684.750" y="250.905" width="18" height="144.095" fill="#251f21"/>
+<text x="678.75" y="443" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.625920</text>
+<text x="678.75" y="464" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.6265</text>
+<rect data-series="count-exact" data-index="2" data-value="0.36101154157859727" x="762.250" y="311.967" width="18" height="83.033" fill="#73a89a"/>
+<rect data-series="count-frequency" data-index="2" data-value="0.36149999999999999" x="792.250" y="311.855" width="18" height="83.145" fill="#251f21"/>
+<text x="786.25" y="443" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.361012</text>
+<text x="786.25" y="464" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.3615</text>
+<rect data-series="count-exact" data-index="3" data-value="0.012952635076597276" x="869.750" y="392.021" width="18" height="2.979" fill="#73a89a"/>
+<rect data-series="count-frequency" data-index="3" data-value="0.012" x="899.750" y="392.240" width="18" height="2.760" fill="#251f21"/>
+<text x="893.75" y="443" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.012953</text>
+<text x="893.75" y="464" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.0120</text>
+<rect data-series="count-exact" data-index="4" data-value="0.00011542740042044834" x="977.250" y="394.973" width="18" height="0.027" fill="#73a89a"/>
+<rect data-series="count-frequency" data-index="4" data-value="0" x="1007.250" y="395.000" width="18" height="0.000" fill="#251f21"/>
+<text x="1001.25" y="443" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.000115</text>
+<text x="1001.25" y="464" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.0000</text>
+<text x="625" y="487" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">K (segments). Teal: exact mass; black: draw frequency.</text>
+<text x="625" y="509" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="600" fill="#251f21">K4: positive exact mass, zero visits. Not a zero posterior.</text>
+<text x="80" y="575" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">C. Cut probability, all interior gaps</text>
+<path d="M80.000 835.000L510.000 835.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="839.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M80.000 725.000L510.000 725.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="729.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.5</text>
+<path d="M80.000 615.000L510.000 615.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="68" y="619.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<text x="151.66666666666666" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">1</text>
+<text x="295.0" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">2</text>
+<text x="438.33333333333337" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">3</text>
+<path d="M138.667 835.000L138.667 821.201" fill="none" stroke="#73a89a" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-exact" data-index="1" data-value="0.062721956470385004" cx="138.667" cy="821.201" r="4" fill="#73a89a"/>
+<path d="M164.667 835.000L164.667 821.206" fill="none" stroke="#251f21" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-frequency" data-index="1" data-value="0.062700000000000006" cx="164.667" cy="821.206" r="4" fill="#251f21"/>
+<text x="151.66666666666666" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.062722 / 0.0627</text>
+<path d="M282.000 835.000L282.000 777.246" fill="none" stroke="#73a89a" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-exact" data-index="2" data-value="0.26251879209703183" cx="282.000" cy="777.246" r="4" fill="#73a89a"/>
+<path d="M308.000 835.000L308.000 777.118" fill="none" stroke="#251f21" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-frequency" data-index="2" data-value="0.2631" cx="308.000" cy="777.118" r="4" fill="#251f21"/>
+<text x="295.0" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.262519 / 0.2631</text>
+<path d="M425.333 835.000L425.333 821.355" fill="none" stroke="#73a89a" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-exact" data-index="3" data-value="0.062022345365636458" cx="425.333" cy="821.355" r="4" fill="#73a89a"/>
+<path d="M451.333 835.000L451.333 821.866" fill="none" stroke="#251f21" stroke-width="3" stroke-dasharray=""/>
+<circle data-series="cut-frequency" data-index="3" data-value="0.059700000000000003" cx="451.333" cy="821.866" r="4" fill="#251f21"/>
+<text x="438.33333333333337" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.062022 / 0.0597</text>
+<text x="80" y="905" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Cut before zero-based index; exact / frequency below.</text>
+<text x="80" y="927" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Shared probability scale[0,1] with count panel.</text>
+<text x="625" y="575" text-anchor="start" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">D. Pointwise latent-mean variance</text>
+<path d="M625.000 835.000L1055.000 835.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="839.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M625.000 725.000L1055.000 725.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="729.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.125</text>
+<path d="M625.000 615.000L1055.000 615.000" fill="none" stroke="#eae9ea" stroke-width="1" stroke-dasharray=""/>
+<text x="613" y="619.0" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.25</text>
+<text x="678.75" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">0</text>
+<text x="786.25" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">1</text>
+<text x="893.75" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">2</text>
+<text x="1001.25" y="857" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">3</text>
+<circle data-series="variance-exact" data-index="0" data-value="0.18602505264250249" cx="678.750" cy="671.298" r="4" fill="#73a89a"/>
+<circle data-series="variance-exact" data-index="1" data-value="0.16792908196006123" cx="786.250" cy="687.222" r="4" fill="#73a89a"/>
+<circle data-series="variance-exact" data-index="2" data-value="0.16749100380298074" cx="893.750" cy="687.608" r="4" fill="#73a89a"/>
+<circle data-series="variance-exact" data-index="3" data-value="0.18514979165188902" cx="1001.250" cy="672.068" r="4" fill="#73a89a"/>
+<polyline data-series="variance-exact" points="678.750,671.298 786.250,687.222 893.750,687.608 1001.250,672.068" fill="none" stroke="#73a89a" stroke-width="2" stroke-dasharray=""/>
+<circle data-series="variance-sample" data-index="0" data-value="0.19072871847785786" cx="678.750" cy="667.159" r="4" fill="#251f21"/>
+<circle data-series="variance-sample" data-index="1" data-value="0.17199006464683281" cx="786.250" cy="683.649" r="4" fill="#251f21"/>
+<circle data-series="variance-sample" data-index="2" data-value="0.16415854375781852" cx="893.750" cy="690.540" r="4" fill="#251f21"/>
+<circle data-series="variance-sample" data-index="3" data-value="0.1819835520631313" cx="1001.250" cy="674.854" r="4" fill="#251f21"/>
+<polyline data-series="variance-sample" points="678.750,667.159 786.250,683.649 893.750,690.540 1001.250,674.854" fill="none" stroke="#251f21" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="678.75" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.1860</text>
+<text x="678.75" y="901" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.1907</text>
+<text x="786.25" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.1679</text>
+<text x="786.25" y="901" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.1720</text>
+<text x="893.75" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.1675</text>
+<text x="893.75" y="901" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.1642</text>
+<text x="1001.25" y="880" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="600" fill="#73a89a">0.1851</text>
+<text x="1001.25" y="901" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.1820</text>
+<text x="625" y="927" text-anchor="start" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Exact teal / sampled black (divisor10,000). No sigma².</text>
+<text x="28" y="972" text-anchor="start" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">All indices, counts and gaps shown. Numerical sums/RNG have finite precision; rare mass may not be sampled.</text>
+<text x="28" y="994" text-anchor="start" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Joint paths exclude future observation noise. No credible bands, event labels, online forecast or real-data calibration.</text>
+</svg>
