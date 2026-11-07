@@ -4,6 +4,8 @@
 
 ![Known shifts and noise-assumption failure](assets/partition-audit.svg)
 
+![Joint posterior draw audit](assets/joint-draw-audit.svg)
+
 ## Run offline
 
 ```sh
@@ -76,7 +78,7 @@ The score table now extends a running mean/M2 accumulator once for each interval
 
 These are mean/M2 observation updates, **not total arithmetic, allocations or wall-clock timings**. Short prefixes needed to reach minimum length are counted even though they are not emitted. The count formula is independently checked against instrumented observation reads. Interval score construction is now O(N²); the unchanged marginal prefix/suffix combinations still cost O(N²*K²), so no claim that the entire inference became linear or that a measured speedup follows.
 
-Seven new tests compare every interval exactly with independent rescans over many lengths, constant/large-offset/extreme inputs, instrumented update counts, exhaustive count formulas, full posterior equality under an injected rescan table, maximum N, no aliases and the public work audit. **21 tests at this increment** (34 after joint sampling below). All prior demo fields are exactly unchanged after removing the newly added `score_work` field from each inference result. The SVG is byte-identical and CI still regenerates it. This is an implementation work reduction, not a new inference method, changed prior, posterior pruning or statistical-quality result.
+Seven new tests compare every interval exactly with independent rescans over many lengths, constant/large-offset/extreme inputs, instrumented update counts, exhaustive count formulas, full posterior equality under an injected rescan table, maximum N, no aliases and the public work audit. **21 tests at this increment** (34 after joint sampling below;42 after the figure audit). All prior demo fields are exactly unchanged after removing the newly added `score_work` field from each inference result. The SVG is byte-identical and CI still regenerates it. This is an implementation work reduction, not a new inference method, changed prior, posterior pruning or statistical-quality result.
 
 ## Joint posterior draws, not thresholded marginal cuts
 
@@ -104,6 +106,21 @@ The committed audit uses all10,000 draws, seed19, observations[-.7,-.4,.6,.9], s
 
 Maximum absolute count-frequency error is 0.000952635; cut-frequency error 0.002322345; latent-mean error 0.002823531; latent-variance error 0.004703666. Variance uses divisor10,000; exact comparison values average over all partitions and conditional mean variance. Every point/count/cut comparison and the first three unselected draws are retained in JSON. These are fixed-seed development checks, not error bounds, untouched-test performance, credible-band coverage or real-data calibration. In particular, **zero draws of K4 does not mean its posterior mass is zero**: its positive mass is retained in the exact inference. Sampling cannot replace the exact rare-event probabilities.
 
-13 new tests bring the total to **34**. For every admissible partition in several tiny fixtures, the product of backward conditional probabilities matches an independent exhaustive partition probability, including constrained/forced/single-observation cases. Additional checks cover every categorical bin midpoint, impossible/underflow weights, whole-path constraints and integrated mass, exact conditional Gaussian call parameters, fixed-seed moment/frequency regressions, input/alias/global-RNG isolation, validation, bounded maximum N, extreme values, CLI and the audit script. Gaussian moment regressions supplement, rather than replace, exhaustive discrete-law checks. Existing inference demo JSON remains exactly identical; its SVG remains byte-identical.
+13 new tests bring the total to **34 at this increment** (42 after the figure audit). For every admissible partition in several tiny fixtures, the product of backward conditional probabilities matches an independent exhaustive partition probability, including constrained/forced/single-observation cases. Additional checks cover every categorical bin midpoint, impossible/underflow weights, whole-path constraints and integrated mass, exact conditional Gaussian call parameters, fixed-seed moment/frequency regressions, input/alias/global-RNG isolation, validation, bounded maximum N, extreme values, CLI and the audit script. Gaussian moment regressions supplement, rather than replace, exhaustive discrete-law checks. Existing inference demo JSON remains exactly identical; its SVG remains byte-identical.
 
 All finite sums and sampling weights use floating point; exponentiation may underflow for tiny choices, and a finite pseudorandom uniform cannot represent every real probability. Normal draws are numerical too. No symbolic exactness, arbitrary-tail sampling guarantee, real-data calibration or robustness to a wrong noise model follows. The sampler is independently derived from this implementation's capped prefix recurrence, not a reproduction of the cited paper's sampling algorithm.
+
+## Reproducible joint-draw figure
+
+```sh
+python examples/sample_audit.py > /tmp/sample-audit.json
+python examples/render_samples.py /tmp/sample-audit.json --check
+```
+
+The second committed SVG uses the same fixed seed19 four-point audit above, with no changed model or selected rerun. Panel A shows the **first three complete latent-mean draws in generation order**, as steps at their segment boundaries, beside all observed points and the exact pointwise mean. A pointwise posterior average is not itself a sampled partition. These three paths are examples, not a credible band, coverage estimate or representative-sample claim.
+
+Panels B/C compare exact count/cut probabilities with frequencies computed from **all10,000 draws**. They share a linear[0,1] probability scale and retain every admissible count and interior gap. Panel D compares exact mixture latent-mean variance with the all-draw variance (divisor10,000) at every observation; it excludes future observation noise sigma². All plot axes, exact/empirical values, generation choices and finite-RNG caveats are stated. The positive K4 mass.000115427 is also written in text because its bar is too short to inspect reliably at normal size. Zero sampled visits never replace its exact probability with zero.
+
+The SVG embeds a numeric manifest of every plotted path and summary, the model settings, seed, draw count and explicit axis domains. The renderer is deliberately restricted to the documented fixed fixture; incomplete rows, changed settings or out-of-domain values fail instead of clipping or silently relabeling them. A generic visualization API is not claimed. Rendering uses only the Python standard library; no downloaded data, chart dependency or browser is needed to generate the SVG.
+
+Eight new tests bring the total to **42**: byte regeneration and check CLI, accessibility/numeric manifest, all three unselected step paths and segment-boundary geometry, every count including positive rare mass versus zero visits, every observed point/cut/variance value, finite in-domain coordinates and no mutation, rejected incomplete/out-of-domain/settings-mismatched fixtures, and visible qualifications. CI now regenerates both figures. Existing inference demo JSON, partition figure, sampling audit values and API outputs are unchanged. No performance, calibration or accuracy gain is inferred from adding the figure.
