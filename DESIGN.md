@@ -2,7 +2,7 @@
 
 [Runnable overview](README.md) · [CLI commands](README.md#run-it) · [Reproduce every audit](README.md#reproduce-the-audits)
 
-This reference preserves the model, derivations, detailed fixtures, feature-specific work bounds and limitations. Test counts within development increments are historical; the current suite has90 tests. The README is the short entry point, not a replacement for these qualifications.
+This reference preserves the model, derivations, detailed fixtures, feature-specific work bounds and limitations. Test counts within development increments are historical; the current suite has104 tests. The README is the short entry point, not a replacement for these qualifications.
 
 **A posterior can be confident about a cut that is only an outlier.** Exact offline Bayesian inference over finite Gaussian changepoint partitions, with constrained-prior normalization, forward/backward sums, segment-count and boundary marginals, a complete MAP partition and posterior segment-mean uncertainty. Every interval's probability and conjugate evidence is retained. Direct joint posterior draws are optional; exact marginals require no sampling. No external dependencies.
 
@@ -229,3 +229,29 @@ The parser, strict model loader and dispatch are now separate readable functions
 Ten new tests bring the suite to **90**: top-level purposes, per-command schema help, option defaults/bounds, every missing/extra field and wrong top-level type, malformed/missing input files, exact dispatch arguments for every model command, demo's lack of file reads, unknown dispatch, parser failures and prefixed CLI errors. Existing numerical API outputs, command JSON, all selected audit values and both figures are unchanged. This is a maintainability and discoverability change, not a statistical or speed result.
 
 The README and portfolio case are now concise entry points linking to this retained reference. Every earlier model assumption, derivation, input bound, fixture-selection caveat, floating-point limitation, feature-specific cost and attribution remains in this file. The showcase descriptions are shortened to stop a growing feature inventory from obscuring what the project demonstrates.
+
+
+## Same-design replicate predictive mixtures
+
+`posterior_predictive(data,queries,**settings)` and `predictive INPUT --queries '[[2,0.0],[3,1.0]]'` return marginal predictive distributions for a **new independent noise realization at an existing design index**. Fit conditions on all the observed data, including that index. This is not a forecast beyond N, a held-out or leave-one-out predictive score, an anomaly p-value, a posterior-predictive discrepancy test or evidence of calibrated coverage.
+
+For each admissible covering interval s at index i, use its posterior interval mass w_s. Normalize the covering masses by their reported raw coverage sum, just as latent moments do. Given s, the replicate distribution is Normal(m_s, sigma²+v_s), where m_s,v_s are the conjugate segment-mean posterior moments. Thus f_i(x)=sum_s w_s NormalPDF(x;m_s,sigma²+v_s). Its mean equals the latent posterior mean, and its variance equals latent posterior variance plus sigma². Averaging densities integrates partition uncertainty; fitting a single Gaussian to moments generally does not preserve density or tails. Components, normalized weights and raw coverage mass remain in the JSON.
+
+Queries are a JSON list of1..64 unique `[index,value]` pairs. Index must be an integer0..N-1, not a boolean; value must be finite in[-1e6,1e6], not a boolean. Repeating an index at different values is allowed. Query order is preserved; one mixture per unique index is returned in sorted index order. The original seven-field model payload and all infer outputs are unchanged. Log density is with respect to observation units, not probability at a point. Its comparison with a moment-matched Gaussian is a shape diagnostic, not a model-quality ranking.
+
+Compute log density using log-sum-exp of log-weight plus component log density. Compute both CDF and survival directly with complementary error functions, rather than subtracting a rounded CDF from1. CDF/survival can still underflow or round to0/1. Positive stored interval probabilities are retained; masses already underflowed by core inference cannot be recovered here. The method therefore inherits the finite-partition floating-point qualifications, not exact symbolic arithmetic.
+
+For each unique index, return fixed .05/.5/.95 mixture quantiles. For probability q, the minimum and maximum of component Normal quantiles bracket the mixture quantile: below every component q-quantile the mixture CDF is at most q, and above every component q-quantile it is at least q. Expand each endpoint by one representable float with `nextafter`, then bisect up to80 iterations or adjacent-float stagnation. Return raw CDF-minus-q residual and final bracket width; fail if the absolute residual exceeds1e-5. These are pointwise equal-tail summaries, not joint or simultaneous bands. Near1e6 offsets and tiny noise can limit attainable CDF precision; the guard is not a mathematical rounding certificate. The output does not imply independence of replicates across indices, which share uncertain partitions and segment means.
+
+`python examples/predictive_audit.py` reproduces `[0,0,4,0,0]`, sigma=.5, prior mean0/std3, min length1, cap3, query index2/value2. During development a grid of sigma `[.4,.5,.6,.7,.8,1]` and cut probabilities `[1e-6,1e-5,.0001,.001,.01,.1]` was inspected for density differences; two contrasting priors were retained. These are selected development fixtures, not held-out evidence.
+
+| Cut p | MAP cuts | Replicate mean | Latent variance | Replicate variance | Mixture log density at2 | Moment-Gaussian log density at2 |
+|---|---|---:|---:|---:|---:|---:|
+| .00001 | none | 1.253205094 | 1.285612951 | 1.535612951 | -2.855886764 | -1.314992926 |
+| .0001 | 2,3 | 3.722824113 | .727423910 | .977423910 | -4.026564697 | -2.425860752 |
+
+The mixture 5/50/95% quantiles are approximately `[-.061731414,.915601508,4.184694378]` for p=.00001 and `[1.527431053,3.840989732,5.027858571]` for p=.0001. The two different priors define different models; neither row is a quality winner. A moment Gaussian overstates density at the chosen valley by1.540893839/1.600703945 nats. The audit asserts both gaps exceed1.5, predictive-minus-latent variance=.25 and quantile CDF residuals below1e-12 for these fixtures. It preserves complete component tables and full-precision values.
+
+Fourteen new tests bring the suite to104: full-partition enumeration checks densities/CDFs and quantile CDF values at every index for tiny constrained examples; a one-partition Normal checks closed-form densities/quantiles; variance addition, stable survival after CDF rounds to1, finite log density when density underflows, offsets/sign symmetry, repeated-index order, mutation isolation, strict query/model bounds, extreme scales, CLI errors, mixture-vs-Gaussian failure,64-query bound and byte-identical audit reproduction are checked. CLI contract tests also cover predictive help, dispatch and required queries. No empirical calibration or real-data validation is claimed.
+
+Beyond full inference O(N²K²), for U unique queried indices there are at most O(U*N²) covering components and O(U*N²*80) fixed quantile work; density/tail queries cost O(Q*N²), Q<=64. Component output and extra memory are O(U*N²). Actual covering counts depend on index and constraints. This bounded tool is for inspection, not large-scale predictive serving.
