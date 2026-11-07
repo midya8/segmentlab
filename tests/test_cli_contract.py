@@ -17,11 +17,11 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 class CliContractTests(unittest.TestCase):
     def test_all_top_level_help_commands_described(self):
         parser=build_parser();help_text=parser.format_help()
-        for command in ['demo','infer','sample','joint','information','decide']:self.assertIn(command,help_text)
+        for command in ['demo','infer','sample','joint','information','decide','predictive']:self.assertIn(command,help_text)
         for phrase in ['entropy','loss','Gaussian','model-conditional']:self.assertIn(phrase,help_text)
     def test_each_model_command_help_has_complete_schema(self):
         parser=build_parser()
-        for command in ['infer','sample','joint','information','decide']:
+        for command in ['infer','sample','joint','information','decide','predictive']:
             output=io.StringIO()
             with contextlib.redirect_stdout(output),self.assertRaises(SystemExit) as error:
                 parser.parse_args([command,'--help'])
@@ -56,6 +56,7 @@ class CliContractTests(unittest.TestCase):
         for command,function,extra,options in [
             ('infer','infer',{},[]),('sample','sample_posterior',{'draws':3,'seed':23},['--draws','3','--seed','23']),
             ('joint','joint_cuts',{'pairs':[[1,3]]},['--pairs','[[1,3]]']),
+            ('predictive','posterior_predictive',{'queries':[[1,0.0]]},['--queries','[[1,0.0]]']),
             ('information','partition_information',{},[]),('decide','boundary_decision',{'false_cut_cost':.2,'missed_cut_cost':3.},['--false-cut-cost','.2','--missed-cut-cost','3'])]:
             args=parser.parse_args([command,'examples/sequence.json']+options)
             with patch('segmentlab.cli.load_model',return_value=model) as loader,patch('segmentlab.cli.'+function,return_value={'ok':command}) as call:
@@ -68,7 +69,7 @@ class CliContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):dispatch(argparse.Namespace(command='unknown',input='input.json'))
     def test_no_args_unknown_command_missing_input_and_required_pairs(self):
         parser=build_parser()
-        for arguments in [[],['unknown'],['infer'],['sample'],['joint','input.json'],['decide','input.json','--false-cut-cost','word']]:
+        for arguments in [[],['unknown'],['infer'],['sample'],['joint','input.json'],['predictive','input.json'],['decide','input.json','--false-cut-cost','word']]:
             with contextlib.redirect_stderr(io.StringIO()),self.assertRaises(SystemExit) as error:parser.parse_args(arguments)
             self.assertEqual(error.exception.code,2)
     def test_cli_errors_are_prefixed_without_traceback(self):
