@@ -1,2 +1,62 @@
-# segmentlab
-Exact offline Bayesian Gaussian changepoint inference: constrained partition priors, forward/backward evidence, posterior boundaries and segment means, exhaustive references and noise-assumption failure audits. Dependency-free Python.
+# SegmentLab
+
+**A posterior can be confident about a cut that is only an outlier.** Exact offline Bayesian inference over finite Gaussian changepoint partitions, with constrained-prior normalization, forward/backward sums, segment-count and boundary marginals, a complete MAP partition and posterior segment-mean uncertainty. Every interval's probability and conjugate evidence is retained. No sampling or external dependencies.
+
+![Known shifts and noise-assumption failure](assets/partition-audit.svg)
+
+## Run offline
+
+```sh
+python -m unittest discover -s tests -v
+python -m segmentlab demo > /tmp/segment-demo.json
+python examples/render_demo.py /tmp/segment-demo.json --check
+python -m segmentlab infer examples/sequence.json
+```
+
+Python3.10+, standard library only. No model/data downloads, accounts, GPU or paid API. CLI `infer` requires exactly the fields in `examples/sequence.json`; API `infer(data, noise_std=.5, prior_mean=0, prior_std=3, cut_probability=.08, min_length=2, max_segments=8)` also has defaults. Data are a single ordered scalar sequence. All results are offline: later observations inform earlier cuts and means. Do not present them as streaming alerts or forecasts.
+
+## Explicit model and prior
+
+Observations within a segment are conditionally independent `y_i~Normal(mu_segment,sigma²)`, with **known, supplied** noise sigma. Each segment independently draws `mu_segment~Normal(m0,tau²)`. Noise scale, mean prior, cut probability and constraints are supplied settings, not learned here. There are no slopes, changing noise, correlated errors or robust outlier components.
+
+On the N-1 interior gaps, independent Bernoulli cut probability p gives an unconstrained partition with K segments weight `p^(K-1)*(1-p)^(N-K)`. SegmentLab **conditions this prior** on all segment lengths>=min_length and K<=max_segments. It computes the admissibility mass Z_prior and divides by it in the reported data evidence. This is not an unnormalized penalty score masquerading as marginal likelihood. The posterior over counts includes the number of admissible partitions at each K; it is not uniform in K.
+
+For an interval of length l, empirical mean xbar and centered sum of squares M2, integrating its mean gives:
+
+```text
+log P(y_interval) = -l/2*log(2*pi*sigma²)
+                    -1/2*log(1+l*tau²/sigma²)
+                    -M2/(2*sigma²)
+                    -l*(xbar-m0)²/(2*(sigma²+l*tau²))
+v = 1/(1/tau² + l/sigma²)
+m = m0 + l*tau²/(sigma²+l*tau²)*(xbar-m0)
+```
+
+Centered sums use online mean/M2 updates rather than subtracting two large raw sums. Forward `F[k,end]` log-sums all k-segment prefix likelihoods; backward `B[k,start]` does the same for suffixes. Combining a prefix, one interval and a suffix, with the appropriate whole-partition prior weight, gives each interval's posterior mass. Summing intervals ending at a gap gives that cut's marginal. A separate max-product recurrence/backtrace gives the complete MAP partition. Marginal peaks are not a joint partition and need not match its cuts.
+
+Pointwise latent means average over all covering interval posteriors. Variance includes both within-interval mean uncertainty and between-partition mean uncertainty, using a centered mixture formula. It is **not future-observation variance** and excludes sigma²; no interval bands or coverage claims are supplied. The probability that each point is covered by one segment, expected segment count from interval masses, expected cuts from boundaries and count-probability total are exposed as audits.
+
+## Measured development examples
+
+A selected synthetic fixture uses seed19,36 observations, sigma.35 and true means −2/2/−1 for12 points each. Settings: m0=0,tau3,p.06,min_length3,max_segments6. It sums49,662 admissible partitions. MAP cuts are `[12,24]`, MAP partition probability.655305, expected segment count3.370941, with cut probabilities near1 at12 and24. A third marginal peak at5 has probability.238269: uncertainty is not hidden by showing only the MAP result. No untouched-test or best-parameter claim follows.
+
+The counterexample uses the **same observed**24-point sequence for two fits: zeros except one value4 at index12. The generating mean is zero throughout; the impulse is a deterministic contamination, not a true mean segment. Both fits use m0=0,tau3,p.05,min_length1,max_segments6 and sum44,552 partitions:
+
+| Supplied noise assumption | MAP cuts | MAP partition probability | Expected segments |
+|---|---|---|---|
+| sigma.15 | [12,13] | .960218 | 3.040626 |
+| sigma2 | [] | .648223 | 1.447386 |
+
+The low-noise model confidently isolates the outlier as its own segment. This demonstrates model dependence, not that the high-noise setting is generally correct or a causal diagnosis. Different sigmas define different likelihoods; no sampler, quality, speed or calibration ranking is claimed. Demo asserts both known-shift recovery and this failure direction. The full JSON includes all observations, model settings, intervals, probabilities and variances, not only these summaries.
+
+## Validation and limits
+
+14 tests cover independent sequential-predictive interval evidence, exhaustive partition enumeration at tiny sizes, evidence/prior normalization, interval/boundary/count marginals, complete MAP partition and probability, pointwise mixture variance, sum rules, impossible intervals, sign/translation invariance, large offsets, JSON/CLI and invalid inputs. CI uses Python3.10..3.13 and regenerates/byte-checks the SVG. The SVG shows all observations, posterior means and boundary probabilities with shared observation and probability axes; it has no inferred credible bands or hidden thinning.
+
+Inputs:1..120 finite observations and prior mean in[-1e6,1e6]; noise/prior standard deviation in[1e-4,1e4]; p in[1e-6,1-1e-6]; integer min_length1..N and max_segments1..12. Effective cap is min(requested,floor(N/min_length)), returned explicitly. No approximation or posterior pruning is used; probability underflow can still occur for negligible partitions. If posterior normalization/coverage loses more than1e-8, inference fails instead of returning numerically unresolved probabilities. These are floating-point exact finite sums, not symbolic arithmetic or a formal error certificate.
+
+This straightforward implementation scores sliced intervals in O(N³), and combines marginal interval prefixes/suffixes in O(N²*K²), with O(N²+N*K) storage. It does not claim the optimized complexity of a paper or a wall-clock advantage. Small bounded sequences are deliberate. No posterior samples, learned hyperparameters, online alert, multiple-testing control, event labels, causal explanation, real-data calibration or model-misspecification guarantee.
+
+## Sources and attribution
+
+Independent implementation inspired by the independent-segment/product-partition recursions in [Fearnhead, Exact and Efficient Bayesian Inference for Multiple Changepoint Problems, Sections2/3](https://people.csail.mit.edu/siracusa/papers/fearnhead06.pdf). This implementation uses the explicitly conditioned Bernoulli-gap prior above, a capped segment-count forward/backward recurrence and conjugate normal means with fixed known sigma. It does not copy reference code, reproduce the paper's data/simulations, implement its sampling/pruning algorithm or claim identical prior endpoint conventions. Gaussian integration and each recurrence are documented here for inspection. MIT licensed.
