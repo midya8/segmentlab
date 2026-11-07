@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="860" viewBox="0 0 1120 860" role="img" aria-labelledby="title desc">
+<title id="title">SegmentLab offline changepoint audit</title>
+<desc id="desc">Known shift and noise-misspecification examples. Separate observation and boundary probability panels, all points shown; posterior means are model conditional.</desc>
+<rect width="1120" height="860" fill="white"/>
+<text x="28" y="35" font-family="Arial,sans-serif" font-size="25" font-weight="400" fill="#251f21">SegmentLab | posterior confidence depends on the noise model</text>
+<text x="28" y="64" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#251f21">Offline exact finite-partition inference. Synthetic development examples, not event detection or real-data calibration.</text>
+<text x="65" y="102" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">Known shifts</text>
+<path d="M65 405.0h300" stroke="#eae9ea"/>
+<text x="40" y="409.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-3</text>
+<path d="M65 337.5h300" stroke="#eae9ea"/>
+<text x="40" y="341.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-1</text>
+<path d="M65 270.0h300" stroke="#eae9ea"/>
+<text x="40" y="274.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M65 202.5h300" stroke="#eae9ea"/>
+<text x="40" y="206.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">3</text>
+<path d="M65 135.0h300" stroke="#eae9ea"/>
+<text x="40" y="139.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">5</text>
+<polyline points="65.000,371.250 73.571,371.250 82.143,371.250 90.714,371.250 99.286,371.250 107.857,371.250 116.429,371.250 125.000,371.250 133.571,371.250 142.143,371.250 150.714,371.250 159.286,371.250 167.857,236.250 176.429,236.250 185.000,236.250 193.571,236.250 202.143,236.250 210.714,236.250 219.286,236.250 227.857,236.250 236.429,236.250 245.000,236.250 253.571,236.250 262.143,236.250 270.714,337.500 279.286,337.500 287.857,337.500 296.429,337.500 305.000,337.500 313.571,337.500 322.143,337.500 330.714,337.500 339.286,337.500 347.857,337.500 356.429,337.500 365.000,337.500" fill="none" stroke="#999396" stroke-width="2.5" stroke-dasharray="4 4"/>
+<polyline points="65.000,377.175 73.571,377.175 82.143,377.175 90.714,376.943 99.286,376.818 107.857,371.829 116.429,371.725 125.000,371.623 133.571,371.585 142.143,371.532 150.714,371.532 159.286,371.532 167.857,233.158 176.429,233.158 185.000,233.158 193.571,233.157 202.143,233.172 210.714,233.183 219.286,233.196 227.857,233.211 236.429,233.271 245.000,233.279 253.571,233.279 262.143,233.279 270.714,336.883 279.286,336.883 287.857,336.883 296.429,337.039 305.000,337.066 313.571,337.077 322.143,337.075 330.714,337.110 339.286,337.119 347.857,337.154 356.429,337.154 365.000,337.154" fill="none" stroke="#73a89a" stroke-width="2.5" stroke-dasharray=""/>
+<circle cx="65.000" cy="380.404" r="2.8" fill="#251f21"/>
+<circle cx="73.571" cy="389.825" r="2.8" fill="#251f21"/>
+<circle cx="82.143" cy="385.273" r="2.8" fill="#251f21"/>
+<circle cx="90.714" cy="373.063" r="2.8" fill="#251f21"/>
+<circle cx="99.286" cy="402.675" r="2.8" fill="#251f21"/>
+<circle cx="107.857" cy="346.408" r="2.8" fill="#251f21"/>
+<circle cx="116.429" cy="372.888" r="2.8" fill="#251f21"/>
+<circle cx="125.000" cy="364.762" r="2.8" fill="#251f21"/>
+<circle cx="133.571" cy="371.888" r="2.8" fill="#251f21"/>
+<circle cx="142.143" cy="362.096" r="2.8" fill="#251f21"/>
+<circle cx="150.714" cy="375.608" r="2.8" fill="#251f21"/>
+<circle cx="159.286" cy="363.002" r="2.8" fill="#251f21"/>
+<circle cx="167.857" cy="228.075" r="2.8" fill="#251f21"/>
+<circle cx="176.429" cy="229.688" r="2.8" fill="#251f21"/>
+<circle cx="185.000" cy="241.989" r="2.8" fill="#251f21"/>
+<circle cx="193.571" cy="222.034" r="2.8" fill="#251f21"/>
+<circle cx="202.143" cy="234.895" r="2.8" fill="#251f21"/>
+<circle cx="210.714" cy="231.931" r="2.8" fill="#251f21"/>
+<circle cx="219.286" cy="231.911" r="2.8" fill="#251f21"/>
+<circle cx="227.857" cy="222.130" r="2.8" fill="#251f21"/>
+<circle cx="236.429" cy="250.940" r="2.8" fill="#251f21"/>
+<circle cx="245.000" cy="223.872" r="2.8" fill="#251f21"/>
+<circle cx="253.571" cy="232.251" r="2.8" fill="#251f21"/>
+<circle cx="262.143" cy="247.798" r="2.8" fill="#251f21"/>
+<circle cx="270.714" cy="322.034" r="2.8" fill="#251f21"/>
+<circle cx="279.286" cy="326.358" r="2.8" fill="#251f21"/>
+<circle cx="287.857" cy="337.078" r="2.8" fill="#251f21"/>
+<circle cx="296.429" cy="349.356" r="2.8" fill="#251f21"/>
+<circle cx="305.000" cy="342.926" r="2.8" fill="#251f21"/>
+<circle cx="313.571" cy="345.850" r="2.8" fill="#251f21"/>
+<circle cx="322.143" cy="318.245" r="2.8" fill="#251f21"/>
+<circle cx="330.714" cy="348.905" r="2.8" fill="#251f21"/>
+<circle cx="339.286" cy="329.863" r="2.8" fill="#251f21"/>
+<circle cx="347.857" cy="365.792" r="2.8" fill="#251f21"/>
+<circle cx="356.429" cy="335.904" r="2.8" fill="#251f21"/>
+<circle cx="365.000" cy="322.757" r="2.8" fill="#251f21"/>
+<text x="60.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">0</text>
+<text x="360.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">35</text>
+<text x="130" y="450" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Observation index (zero-based)</text>
+<text x="65" y="486" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#251f21">Posterior cut probability</text>
+<path d="M65 655h300" stroke="#eae9ea"/>
+<text x="40" y="659" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M65 585.0h300" stroke="#eae9ea"/>
+<text x="40" y="589.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.5</text>
+<path d="M65 515h300" stroke="#eae9ea"/>
+<text x="40" y="519" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M73.571 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M82.143 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M90.714 655V652.776" stroke="#73a89a" stroke-width="3"/>
+<path d="M99.286 655V653.548" stroke="#73a89a" stroke-width="3"/>
+<path d="M107.857 655V621.642" stroke="#73a89a" stroke-width="3"/>
+<path d="M116.429 655V653.690" stroke="#73a89a" stroke-width="3"/>
+<path d="M125.000 655V653.719" stroke="#73a89a" stroke-width="3"/>
+<path d="M133.571 655V654.026" stroke="#73a89a" stroke-width="3"/>
+<path d="M142.143 655V653.996" stroke="#73a89a" stroke-width="3"/>
+<path d="M150.714 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M159.286 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M167.857 655V515.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M176.429 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M185.000 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M193.571 655V654.460" stroke="#73a89a" stroke-width="3"/>
+<path d="M202.143 655V654.431" stroke="#73a89a" stroke-width="3"/>
+<path d="M210.714 655V654.484" stroke="#73a89a" stroke-width="3"/>
+<path d="M219.286 655V654.478" stroke="#73a89a" stroke-width="3"/>
+<path d="M227.857 655V654.449" stroke="#73a89a" stroke-width="3"/>
+<path d="M236.429 655V654.022" stroke="#73a89a" stroke-width="3"/>
+<path d="M245.000 655V654.442" stroke="#73a89a" stroke-width="3"/>
+<path d="M253.571 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M262.143 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M270.714 655V515.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M279.286 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M287.857 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M296.429 655V653.117" stroke="#73a89a" stroke-width="3"/>
+<path d="M305.000 655V654.245" stroke="#73a89a" stroke-width="3"/>
+<path d="M313.571 655V654.398" stroke="#73a89a" stroke-width="3"/>
+<path d="M322.143 655V654.434" stroke="#73a89a" stroke-width="3"/>
+<path d="M330.714 655V654.176" stroke="#73a89a" stroke-width="3"/>
+<path d="M339.286 655V654.380" stroke="#73a89a" stroke-width="3"/>
+<path d="M347.857 655V654.157" stroke="#73a89a" stroke-width="3"/>
+<path d="M356.429 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M365.000 655V655.000" stroke="#73a89a" stroke-width="3"/>
+<text x="65" y="685" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Cut before index: 1 through 35</text>
+<text x="65" y="718" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#251f21">MAP cuts: [12, 24]</text>
+<text x="65" y="745" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">MAP partition probability: 0.6553</text>
+<text x="65" y="770" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Expected segment count: 3.3709</text>
+<text x="430" y="102" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">Outlier, assumed sigma = .15</text>
+<path d="M430 405.0h300" stroke="#eae9ea"/>
+<text x="405" y="409.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-3</text>
+<path d="M430 337.5h300" stroke="#eae9ea"/>
+<text x="405" y="341.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-1</text>
+<path d="M430 270.0h300" stroke="#eae9ea"/>
+<text x="405" y="274.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M430 202.5h300" stroke="#eae9ea"/>
+<text x="405" y="206.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">3</text>
+<path d="M430 135.0h300" stroke="#eae9ea"/>
+<text x="405" y="139.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">5</text>
+<polyline points="430.000,303.750 443.043,303.750 456.087,303.750 469.130,303.750 482.174,303.750 495.217,303.750 508.261,303.750 521.304,303.750 534.348,303.750 547.391,303.750 560.435,303.750 573.478,303.750 586.522,303.750 599.565,303.750 612.609,303.750 625.652,303.750 638.696,303.750 651.739,303.750 664.783,303.750 677.826,303.750 690.870,303.750 703.913,303.750 716.957,303.750 730.000,303.750" fill="none" stroke="#999396" stroke-width="2.5" stroke-dasharray="4 4"/>
+<polyline points="430.000,303.750 443.043,303.750 456.087,303.750 469.130,303.750 482.174,303.750 495.217,303.750 508.261,303.750 521.304,303.750 534.348,303.750 547.391,303.750 560.435,303.750 573.478,303.750 586.522,169.087 599.565,303.750 612.609,303.750 625.652,303.750 638.696,303.750 651.739,303.750 664.783,303.750 677.826,303.750 690.870,303.750 703.913,303.750 716.957,303.750 730.000,303.750" fill="none" stroke="#73a89a" stroke-width="2.5" stroke-dasharray=""/>
+<circle cx="430.000" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="443.043" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="456.087" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="469.130" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="482.174" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="495.217" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="508.261" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="521.304" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="534.348" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="547.391" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="560.435" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="573.478" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="586.522" cy="168.750" r="2.8" fill="#251f21"/>
+<circle cx="599.565" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="612.609" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="625.652" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="638.696" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="651.739" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="664.783" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="677.826" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="690.870" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="703.913" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="716.957" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="730.000" cy="303.750" r="2.8" fill="#251f21"/>
+<text x="425.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">0</text>
+<text x="725.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">23</text>
+<text x="495" y="450" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Observation index (zero-based)</text>
+<text x="430" y="486" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#251f21">Posterior cut probability</text>
+<path d="M430 655h300" stroke="#eae9ea"/>
+<text x="405" y="659" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M430 585.0h300" stroke="#eae9ea"/>
+<text x="405" y="589.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.5</text>
+<path d="M430 515h300" stroke="#eae9ea"/>
+<text x="405" y="519" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M443.043 655V654.616" stroke="#73a89a" stroke-width="3"/>
+<path d="M456.087 655V654.714" stroke="#73a89a" stroke-width="3"/>
+<path d="M469.130 655V654.754" stroke="#73a89a" stroke-width="3"/>
+<path d="M482.174 655V654.774" stroke="#73a89a" stroke-width="3"/>
+<path d="M495.217 655V654.784" stroke="#73a89a" stroke-width="3"/>
+<path d="M508.261 655V654.787" stroke="#73a89a" stroke-width="3"/>
+<path d="M521.304 655V654.784" stroke="#73a89a" stroke-width="3"/>
+<path d="M534.348 655V654.774" stroke="#73a89a" stroke-width="3"/>
+<path d="M547.391 655V654.754" stroke="#73a89a" stroke-width="3"/>
+<path d="M560.435 655V654.714" stroke="#73a89a" stroke-width="3"/>
+<path d="M573.478 655V654.616" stroke="#73a89a" stroke-width="3"/>
+<path d="M586.522 655V515.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M599.565 655V515.000" stroke="#73a89a" stroke-width="3"/>
+<path d="M612.609 655V654.615" stroke="#73a89a" stroke-width="3"/>
+<path d="M625.652 655V654.712" stroke="#73a89a" stroke-width="3"/>
+<path d="M638.696 655V654.750" stroke="#73a89a" stroke-width="3"/>
+<path d="M651.739 655V654.768" stroke="#73a89a" stroke-width="3"/>
+<path d="M664.783 655V654.776" stroke="#73a89a" stroke-width="3"/>
+<path d="M677.826 655V654.776" stroke="#73a89a" stroke-width="3"/>
+<path d="M690.870 655V654.768" stroke="#73a89a" stroke-width="3"/>
+<path d="M703.913 655V654.750" stroke="#73a89a" stroke-width="3"/>
+<path d="M716.957 655V654.712" stroke="#73a89a" stroke-width="3"/>
+<path d="M730.000 655V654.615" stroke="#73a89a" stroke-width="3"/>
+<text x="430" y="685" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Cut before index: 1 through 23</text>
+<text x="430" y="718" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#251f21">MAP cuts: [12, 13]</text>
+<text x="430" y="745" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">MAP partition probability: 0.9602</text>
+<text x="430" y="770" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Expected segment count: 3.0406</text>
+<text x="795" y="102" font-family="Arial,sans-serif" font-size="18" font-weight="600" fill="#251f21">Same outlier, assumed sigma = 2</text>
+<path d="M795 405.0h300" stroke="#eae9ea"/>
+<text x="770" y="409.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-3</text>
+<path d="M795 337.5h300" stroke="#eae9ea"/>
+<text x="770" y="341.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">-1</text>
+<path d="M795 270.0h300" stroke="#eae9ea"/>
+<text x="770" y="274.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M795 202.5h300" stroke="#eae9ea"/>
+<text x="770" y="206.5" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">3</text>
+<path d="M795 135.0h300" stroke="#eae9ea"/>
+<text x="770" y="139.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">5</text>
+<polyline points="795.000,303.750 808.043,303.750 821.087,303.750 834.130,303.750 847.174,303.750 860.217,303.750 873.261,303.750 886.304,303.750 899.348,303.750 912.391,303.750 925.435,303.750 938.478,303.750 951.522,303.750 964.565,303.750 977.609,303.750 990.652,303.750 1003.696,303.750 1016.739,303.750 1029.783,303.750 1042.826,303.750 1055.870,303.750 1068.913,303.750 1081.957,303.750 1095.000,303.750" fill="none" stroke="#999396" stroke-width="2.5" stroke-dasharray="4 4"/>
+<polyline points="795.000,299.078 808.043,298.932 821.087,298.805 834.130,298.686 847.174,298.568 860.217,298.449 873.261,298.324 886.304,298.191 899.348,298.047 912.391,297.886 925.435,297.699 938.478,297.462 951.522,297.058 964.565,297.450 977.609,297.678 990.652,297.859 1003.696,298.015 1016.739,298.157 1029.783,298.288 1042.826,298.414 1055.870,298.536 1068.913,298.660 1081.957,298.790 1095.000,298.942" fill="none" stroke="#73a89a" stroke-width="2.5" stroke-dasharray=""/>
+<circle cx="795.000" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="808.043" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="821.087" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="834.130" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="847.174" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="860.217" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="873.261" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="886.304" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="899.348" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="912.391" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="925.435" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="938.478" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="951.522" cy="168.750" r="2.8" fill="#251f21"/>
+<circle cx="964.565" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="977.609" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="990.652" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1003.696" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1016.739" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1029.783" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1042.826" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1055.870" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1068.913" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1081.957" cy="303.750" r="2.8" fill="#251f21"/>
+<circle cx="1095.000" cy="303.750" r="2.8" fill="#251f21"/>
+<text x="790.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">0</text>
+<text x="1090.0" y="428" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">23</text>
+<text x="860" y="450" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Observation index (zero-based)</text>
+<text x="795" y="486" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#251f21">Posterior cut probability</text>
+<path d="M795 655h300" stroke="#eae9ea"/>
+<text x="770" y="659" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0</text>
+<path d="M795 585.0h300" stroke="#eae9ea"/>
+<text x="770" y="589.0" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">0.5</text>
+<path d="M795 515h300" stroke="#eae9ea"/>
+<text x="770" y="519" font-family="Arial,sans-serif" font-size="12" font-weight="400" fill="#251f21">1</text>
+<path d="M808.043 655V650.863" stroke="#73a89a" stroke-width="3"/>
+<path d="M821.087 655V651.654" stroke="#73a89a" stroke-width="3"/>
+<path d="M834.130 655V652.050" stroke="#73a89a" stroke-width="3"/>
+<path d="M847.174 655V652.288" stroke="#73a89a" stroke-width="3"/>
+<path d="M860.217 655V652.444" stroke="#73a89a" stroke-width="3"/>
+<path d="M873.261 655V652.549" stroke="#73a89a" stroke-width="3"/>
+<path d="M886.304 655V652.618" stroke="#73a89a" stroke-width="3"/>
+<path d="M899.348 655V652.660" stroke="#73a89a" stroke-width="3"/>
+<path d="M912.391 655V652.678" stroke="#73a89a" stroke-width="3"/>
+<path d="M925.435 655V652.669" stroke="#73a89a" stroke-width="3"/>
+<path d="M938.478 655V652.621" stroke="#73a89a" stroke-width="3"/>
+<path d="M951.522 655V652.450" stroke="#73a89a" stroke-width="3"/>
+<path d="M964.565 655V652.466" stroke="#73a89a" stroke-width="3"/>
+<path d="M977.609 655V652.621" stroke="#73a89a" stroke-width="3"/>
+<path d="M990.652 655V652.654" stroke="#73a89a" stroke-width="3"/>
+<path d="M1003.696 655V652.646" stroke="#73a89a" stroke-width="3"/>
+<path d="M1016.739 655V652.609" stroke="#73a89a" stroke-width="3"/>
+<path d="M1029.783 655V652.542" stroke="#73a89a" stroke-width="3"/>
+<path d="M1042.826 655V652.439" stroke="#73a89a" stroke-width="3"/>
+<path d="M1055.870 655V652.285" stroke="#73a89a" stroke-width="3"/>
+<path d="M1068.913 655V652.047" stroke="#73a89a" stroke-width="3"/>
+<path d="M1081.957 655V651.653" stroke="#73a89a" stroke-width="3"/>
+<path d="M1095.000 655V650.862" stroke="#73a89a" stroke-width="3"/>
+<text x="795" y="685" font-family="Arial,sans-serif" font-size="13" font-weight="400" fill="#251f21">Cut before index: 1 through 23</text>
+<text x="795" y="718" font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#251f21">MAP cuts: []</text>
+<text x="795" y="745" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">MAP partition probability: 0.6482</text>
+<text x="795" y="770" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Expected segment count: 1.4474</text>
+<text x="28" y="809" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Dots: all observations. Solid teal: posterior latent-mean average. Dashed gray: generating mean (not inferred).</text>
+<text x="28" y="836" font-family="Arial,sans-serif" font-size="14" font-weight="400" fill="#251f21">Shared observation y[-3,5] and probability[0,1] scales. Marginal cut peaks are not a joint partition. No hidden thinning.</text>
+</svg>
