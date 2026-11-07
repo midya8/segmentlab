@@ -123,4 +123,35 @@ Panels B/C compare exact count/cut probabilities with frequencies computed from 
 
 The SVG embeds a numeric manifest of every plotted path and summary, the model settings, seed, draw count and explicit axis domains. The renderer is deliberately restricted to the documented fixed fixture; incomplete rows, changed settings or out-of-domain values fail instead of clipping or silently relabeling them. A generic visualization API is not claimed. Rendering uses only the Python standard library; no downloaded data, chart dependency or browser is needed to generate the SVG.
 
-Eight new tests bring the total to **42**: byte regeneration and check CLI, accessibility/numeric manifest, all three unselected step paths and segment-boundary geometry, every count including positive rare mass versus zero visits, every observed point/cut/variance value, finite in-domain coordinates and no mutation, rejected incomplete/out-of-domain/settings-mismatched fixtures, and visible qualifications. CI now regenerates both figures. Existing inference demo JSON, partition figure, sampling audit values and API outputs are unchanged. No performance, calibration or accuracy gain is inferred from adding the figure.
+Eight new tests bring the total to **42 at this increment** (55 after joint cut queries): byte regeneration and check CLI, accessibility/numeric manifest, all three unselected step paths and segment-boundary geometry, every count including positive rare mass versus zero visits, every observed point/cut/variance value, finite in-domain coordinates and no mutation, rejected incomplete/out-of-domain/settings-mismatched fixtures, and visible qualifications. CI now regenerates both figures. Existing inference demo JSON, partition figure, sampling audit values and API outputs are unchanged. No performance, calibration or accuracy gain is inferred from adding the figure.
+
+## Exact joint cut inclusion queries
+
+```sh
+python -m segmentlab joint examples/sequence.json --pairs '[[1,3],[2,4]]'
+python examples/joint_audit.py > /tmp/joint-audit.json
+```
+
+API `joint_cuts(data, pairs, **settings)` accepts the same inference settings and1..64 unique pairs `[a,b]`, with integer interior cut-before indices `1<=a<b<N`. Returned JSON contains the unchanged full inference, every pair in requested order, exact single/joint probabilities and finite log values, both conditional directions, marginal-product comparison, structural-impossibility flags and constrained-DP evaluation counts. Pairs must be lists; duplicate, reversed, equal or endpoint indices fail. It asks whether **both cuts occur**, allowing any other admissible cuts, including between them. It does not ask whether the interval[a,b) is one segment or force exactly these two cuts.
+
+For each required gap set, reject candidate segment intervals that cross a required gap (`start<gap<end`), then rerun the capped count-prefix log-sum recurrence over the retained interval evidence. Every complete retained partition therefore contains each required gap, with all other permitted partitions still present. Sum its count likelihoods with the **original whole-partition prior** and divide by the original full evidence joint mass. The constrained numerator is not renormalized into a new model. Single-gap constrained masses are reused across pairs. If U distinct single gaps and Q requested pairs occur, the query adds O((U+Q)*N²*K) work after the unchanged O(N²*K²) full inference; one constrained table at a time adds O(N²+N*K) working storage. `query_work` counts DP evaluations, not total arithmetic or timings. This is a bounded reference, not a fast all-pairs algorithm or speed claim.
+
+`joint_minus_independence_product = P(a,b)-P(a)*P(b)` is the posterior covariance of cut-inclusion indicators under this model, not causal interaction. Pairwise inclusion summaries do not determine the complete partition distribution. The conditional probability `second_given_first` is computed as a log-mass ratio, not by dividing two possibly underflowed floating probabilities. A structurally impossible event has probability0, log probability null, and an explicit flag. Conditioning on an impossible event gives null, **not0**. A possible event can exponentiate to0 while retaining its finite log mass and a false impossibility flag. Log conditional null can also mean the conditioned target event is impossible; the condition-impossible flags distinguish this from an undefined conditional. Small positive log-ratio roundoff up to1e-8 is capped at0; a larger positive ratio fails as numerically unresolved. This is not a formal arithmetic certificate.
+
+### Marginal products can invent a forbidden joint event
+
+The committed six-zero fixture uses sigma.5,m0=0,tau3,p.08,min_length1,max_segments2. Each cut at2 or4 has positive posterior marginal. But both would require at least3 segments, so their joint inclusion is structurally impossible:
+
+| Quantity | Posterior value |
+|---|---|
+| P(cut2) | .011658220257 |
+| P(cut4) | .011658220257 |
+| P(cut2)*P(cut4), independence shortcut | .000135914100 |
+| P(cut2 and cut4), exact | 0, structurally impossible |
+| P(cut4 given cut2), exact | 0, defined because cut2 is possible |
+
+This counterexample follows from a chosen count cap, not a real-data discovery or evidence that cuts repel causally. A second four-point fixture uses[-.7,-.4,.6,.9] and cap4: P(cut1,cut2)=.005542191566, whereas the marginal product is.016465692251; P(cut2|cut1)=.088361267381 versus marginal P(cut2)=.262518792097. Other cuts remain allowed. The audit retains all three possible pairs, not only this example.
+
+The numerical stress fixture[-100,-100,100,100], sigma.01,tau100,min_length1,cap3 has a possible joint event at cuts1/3 with finite log probability about-100000011.306129 but floating probability0. Its conditionals retain finite logs too. This is explicitly different from cap exclusion. A seven-zero fixture with minimum length3 makes cut1 impossible: P(cut3|cut1) is null, while P(cut1|cut3)=0. Every fixture's data, all settings, partition count, rows and work counts are retained in JSON. These are selected development examples, not calibration, untouched-test performance or a model-selection ranking.
+
+13 new tests bring the total to **55**. They compare every pair with independent exhaustive partition sums across multiple minimum lengths/caps; verify both conditional directions, single marginals, Frechet bounds and probability identities; require that intervening cuts remain included; distinguish structural exclusion, impossible conditions and finite-log underflow; check an unconstrained recurrence against the original evidence, shared single-query work counts/order, no mutation/unchanged inference, strict inputs, maximum N and64 pairs, CLI and all audit directions. Both existing figures and inference/sample audit values remain unchanged. Exact finite sums remain floating point; no pairwise summary supplies online detection, event attribution, causality, calibrated coverage or a complete joint law.
