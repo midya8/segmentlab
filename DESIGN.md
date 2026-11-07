@@ -201,7 +201,7 @@ For boundary probability q_j, selecting cut j has expected cost `c_false*(1-q_j)
 
 Despite dependent cuts, their marginal probabilities suffice for **this additive expected loss** by linearity of expectation. This does not assert cut independence or reconstruct the full partition law. MAP is a different Bayes decision: it minimizes0/1 loss for getting the **entire partition** wrong. The report keeps MAP cuts and their additive boundary risk rather than labeling MAP statistically worse. A third comparison independently thresholds q_j at `c_false/(c_false+c_miss)` (strict greater-than, omit ties) and reports whether that unconstrained list is admissible. It never silently returns the threshold list as the constrained answer.
 
-After unchanged inference, the decision scans O(N²*K) transitions. This implementation retains and copies complete cut tuples for deterministic lexicographic ties, so worst-case decision work is O(N²*K²), with O(N*K²) tuple storage, plus the unchanged inference storage O(N²+N*K). It is a bounded transparent reference, not a claim of an optimized backtrace or speedup. No posterior sampling, model refit or independent-cut approximation is used.
+After unchanged inference, the decision scans `O(N²*K)` transitions. This implementation retains and copies complete cut tuples for deterministic lexicographic ties, so worst-case decision work is `O(N²*K²)`, with `O(N*K²)` tuple storage, plus the unchanged inference storage `O(N²+N*K)`. It is a bounded transparent reference, not a claim of an optimized backtrace or speedup. No posterior sampling, model refit or independent-cut approximation is used.
 
 ### MAP and minimum boundary risk can choose different partitions
 
