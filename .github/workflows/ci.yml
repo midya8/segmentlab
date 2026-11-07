@@ -21,3 +21,5 @@ jobs:
           python-version: '3.11'
       - run: python -m segmentlab demo > /tmp/segment-demo.json
       - run: python examples/render_demo.py /tmp/segment-demo.json --check
+      - run: python examples/sample_audit.py > /tmp/sample-audit.json
+      - run: python examples/render_samples.py /tmp/sample-audit.json --check
