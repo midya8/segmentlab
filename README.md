@@ -1,6 +1,6 @@
 # SegmentLab
 
-**A posterior can be confident about a cut that is only an outlier.** Exact offline Bayesian inference over finite Gaussian changepoint partitions, with constrained-prior normalization, forward/backward sums, segment-count and boundary marginals, a complete MAP partition and posterior segment-mean uncertainty. Every interval's probability and conjugate evidence is retained. No sampling or external dependencies.
+**A posterior can be confident about a cut that is only an outlier.** Exact offline Bayesian inference over finite Gaussian changepoint partitions, with constrained-prior normalization, forward/backward sums, segment-count and boundary marginals, a complete MAP partition and posterior segment-mean uncertainty. Every interval's probability and conjugate evidence is retained. Direct joint posterior draws are optional; exact marginals require no sampling. No external dependencies.
 
 ![Known shifts and noise-assumption failure](assets/partition-audit.svg)
 
@@ -11,6 +11,7 @@ python -m unittest discover -s tests -v
 python -m segmentlab demo > /tmp/segment-demo.json
 python examples/render_demo.py /tmp/segment-demo.json --check
 python -m segmentlab infer examples/sequence.json
+python -m segmentlab sample examples/sequence.json --draws 4 --seed 23
 ```
 
 Python3.10+, standard library only. No model/data downloads, accounts, GPU or paid API. CLI `infer` requires exactly the fields in `examples/sequence.json`; API `infer(data, noise_std=.5, prior_mean=0, prior_std=3, cut_probability=.08, min_length=2, max_segments=8)` also has defaults. Data are a single ordered scalar sequence. All results are offline: later observations inform earlier cuts and means. Do not present them as streaming alerts or forecasts.
@@ -55,7 +56,7 @@ The low-noise model confidently isolates the outlier as its own segment. This de
 
 Inputs:1..120 finite observations and prior mean in[-1e6,1e6]; noise/prior standard deviation in[1e-4,1e4]; p in[1e-6,1-1e-6]; integer min_length1..N and max_segments1..12. Effective cap is min(requested,floor(N/min_length)), returned explicitly. No approximation or posterior pruning is used; probability underflow can still occur for negligible partitions. If posterior normalization/coverage loses more than1e-8, inference fails instead of returning numerically unresolved probabilities. These are floating-point exact finite sums, not symbolic arithmetic or a formal error certificate.
 
-The interval table uses rolling centered statistics in O(N²), and combines marginal interval prefixes/suffixes in O(N²*K²), with O(N²+N*K) storage. It does not claim the optimized complexity of a paper or a wall-clock advantage. Small bounded sequences are deliberate. No posterior samples, learned hyperparameters, online alert, multiple-testing control, event labels, causal explanation, real-data calibration or model-misspecification guarantee.
+The interval table uses rolling centered statistics in O(N²), and combines marginal interval prefixes/suffixes in O(N²*K²), with O(N²+N*K) storage. It does not claim the optimized complexity of a paper or a wall-clock advantage. Small bounded sequences are deliberate. No learned hyperparameters, online alert, multiple-testing control, event labels, causal explanation, real-data calibration or model-misspecification guarantee.
 
 ## Sources and attribution
 
@@ -75,4 +76,34 @@ The score table now extends a running mean/M2 accumulator once for each interval
 
 These are mean/M2 observation updates, **not total arithmetic, allocations or wall-clock timings**. Short prefixes needed to reach minimum length are counted even though they are not emitted. The count formula is independently checked against instrumented observation reads. Interval score construction is now O(N²); the unchanged marginal prefix/suffix combinations still cost O(N²*K²), so no claim that the entire inference became linear or that a measured speedup follows.
 
-Seven new tests compare every interval exactly with independent rescans over many lengths, constant/large-offset/extreme inputs, instrumented update counts, exhaustive count formulas, full posterior equality under an injected rescan table, maximum N, no aliases and the public work audit. **21 tests total.** All prior demo fields are exactly unchanged after removing the newly added `score_work` field from each inference result. The SVG is byte-identical and CI still regenerates it. This is an implementation work reduction, not a new inference method, changed prior, posterior pruning or statistical-quality result.
+Seven new tests compare every interval exactly with independent rescans over many lengths, constant/large-offset/extreme inputs, instrumented update counts, exhaustive count formulas, full posterior equality under an injected rescan table, maximum N, no aliases and the public work audit. **21 tests at this increment** (34 after joint sampling below). All prior demo fields are exactly unchanged after removing the newly added `score_work` field from each inference result. The SVG is byte-identical and CI still regenerates it. This is an implementation work reduction, not a new inference method, changed prior, posterior pruning or statistical-quality result.
+
+## Joint posterior draws, not thresholded marginal cuts
+
+```sh
+python -m segmentlab sample examples/sequence.json --draws 4 --seed 23
+python examples/sample_audit.py > /tmp/sample-audit.json
+```
+
+API `sample_posterior(data, draws=100, seed=0, **settings)` accepts the same model settings as `infer`, with integer draws1..10,000 and seed0..2**32-1. It returns the unchanged full inference, seed, draw count and every drawn partition, its integrated posterior log probability/probability, conditional segment-mean parameters, drawn segment means and complete latent-mean path. That partition probability integrates out means: it is **not a sampled continuous path density**. The latent path excludes future observation noise.
+
+First draw K with log weights `F[K,N] + (K-1)*log(p) + (N-K)*log(1-p)`. Given K and current end e, draw the preceding start s with weights `exp(F[k-1,s] + log P(y[s:e]))`, then repeat with k-1 and end s. The whole-partition prior is constant conditional on K, so it cancels from these conditional start choices. Every path starts at0, ends atN, and respects minimum length and the count cap. Marginal cut probabilities are never thresholded or sampled as independent Bernoulli decisions. The product of count and conditional-start probabilities telescopes to the full partition posterior. Finally draw each segment mean independently from its conjugate Normal(m,v), holding it constant throughout that segment.
+
+This is a direct backward sampler with independent pseudorandom draws, not MCMC. There is no burn-in, thinning, proposal acceptance, learned tuning or convergence diagnostic. It reconstructs a prefix table once from the already computed interval evidence in an additional O(N²*K) recurrence. Each draw scans at most O(K*N+N) work including path materialization; storing D complete paths costs O(D*(N+K)), in addition to inference storage. Full inference still has O(N²*K²) marginal work. No rescan or full inference occurs per draw. A local `random.Random(seed)` leaves global random state untouched. Reproducibility is for this implementation/runtime; no cross-language or future-version byte identity is promised.
+
+### Fixed-seed finite-sample audit
+
+The committed audit uses all10,000 draws, seed19, observations[-.7,-.4,.6,.9], sigma.5,m0=0,tau3,p.08,min_length1,max_segments4. All8 partitions are admissible:
+
+| Segments | Exact posterior mass | Draw frequency |
+|---|---|---|
+| 1 | 0.625920396 | 0.6265 |
+| 2 | 0.361011542 | 0.3615 |
+| 3 | 0.012952635 | 0.0120 |
+| 4 | 0.000115427 | 0.0000 |
+
+Maximum absolute count-frequency error is 0.000952635; cut-frequency error 0.002322345; latent-mean error 0.002823531; latent-variance error 0.004703666. Variance uses divisor10,000; exact comparison values average over all partitions and conditional mean variance. Every point/count/cut comparison and the first three unselected draws are retained in JSON. These are fixed-seed development checks, not error bounds, untouched-test performance, credible-band coverage or real-data calibration. In particular, **zero draws of K4 does not mean its posterior mass is zero**: its positive mass is retained in the exact inference. Sampling cannot replace the exact rare-event probabilities.
+
+13 new tests bring the total to **34**. For every admissible partition in several tiny fixtures, the product of backward conditional probabilities matches an independent exhaustive partition probability, including constrained/forced/single-observation cases. Additional checks cover every categorical bin midpoint, impossible/underflow weights, whole-path constraints and integrated mass, exact conditional Gaussian call parameters, fixed-seed moment/frequency regressions, input/alias/global-RNG isolation, validation, bounded maximum N, extreme values, CLI and the audit script. Gaussian moment regressions supplement, rather than replace, exhaustive discrete-law checks. Existing inference demo JSON remains exactly identical; its SVG remains byte-identical.
+
+All finite sums and sampling weights use floating point; exponentiation may underflow for tiny choices, and a finite pseudorandom uniform cannot represent every real probability. Normal draws are numerical too. No symbolic exactness, arbitrary-tail sampling guarantee, real-data calibration or robustness to a wrong noise model follows. The sampler is independently derived from this implementation's capped prefix recurrence, not a reproduction of the cited paper's sampling algorithm.
