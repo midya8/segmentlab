@@ -23,7 +23,22 @@ python -m segmentlab decide examples/sequence.json --false-cut-cost 1 --missed-c
 Every model command reads exactly these seven fields, with no extra keys:
 
 ```json
-{"data":[-1.1,-0.9,-1.0,1.0,0.9,1.1],"noise_std":0.2,"prior_mean":0.0,"prior_std":3.0,"cut_probability":0.1,"min_length":2,"max_segments":3}
+{
+  "data": [
+    -1.1,
+    -0.9,
+    -1.0,
+    1.0,
+    0.9,
+    1.1
+  ],
+  "noise_std": 0.2,
+  "prior_mean": 0.0,
+  "prior_std": 3.0,
+  "cut_probability": 0.1,
+  "min_length": 2,
+  "max_segments": 3
+}
 ```
 
 `demo` takes no file. Output is JSON; invalid inputs exit2 with an error on stderr. Python APIs accept model defaults, but the CLI intentionally requires a complete model payload. `python -m segmentlab COMMAND --help` describes each command's options, schema and bounds.
