@@ -26,10 +26,33 @@ def segment_score(values,noise_std,prior_mean,prior_std):
     for n,y in enumerate(values,1):
         delta=y-mean;mean+=delta/n;m2+=delta*(y-mean)
     if not values:raise ValueError('empty segment')
+    return _from_moments(n,mean,m2,noise_std,prior_mean,prior_std)
+
+
+def _from_moments(n,mean,m2,noise_std,prior_mean,prior_std):
     sigma2=noise_std**2;tau2=prior_std**2
     log_marginal=-n/2*math.log(2*math.pi*sigma2)-.5*math.log1p(n*tau2/sigma2)-m2/(2*sigma2)-n*(mean-prior_mean)**2/(2*(sigma2+n*tau2))
     variance=1/(1/tau2+n/sigma2)
     return {'log_marginal_likelihood':log_marginal,'posterior_mean':prior_mean+n*tau2/(sigma2+n*tau2)*(mean-prior_mean),'posterior_variance':variance}
+
+
+def interval_table(y,sigma,mu,tau,minimum):
+    """Accumulate each prefix from a fixed start once; preserve scorer order.
+
+    Internal helper: infer owns validation. Work counts are actual scalar
+    observation accumulations, not arithmetic operations or timings.
+    """
+    n=len(y);scores={};updates=0;legacy=0
+    for start in range(n-minimum+1):
+        mean=0.;m2=0.;length=0
+        for end in range(start+1,n+1):
+            length+=1;delta=y[end-1]-mean;mean+=delta/length;m2+=delta*(y[end-1]-mean);updates+=1
+            if length>=minimum:
+                scores[start,end]=_from_moments(length,mean,m2,sigma,mu,tau);legacy+=length
+    return scores,{'intervals_scored':len(scores),'rolling_observation_updates':updates,
+                   'independent_rescan_observation_updates':legacy,
+                   'avoided_observation_updates':legacy-updates,
+                   'semantics':'scalar observation mean/M2 updates for interval score construction only; independent-rescan count sums each scored interval length; not total inference operations, memory allocations or wall time'}
 
 
 def infer(data,noise_std=.5,prior_mean=0.,prior_std=3.,cut_probability=.08,min_length=2,max_segments=8):
@@ -38,9 +61,7 @@ def infer(data,noise_std=.5,prior_mean=0.,prior_std=3.,cut_probability=.08,min_l
     sigma=real(noise_std,'noise_std',1e-4,1e4);mu=real(prior_mean,'prior_mean',-1e6,1e6);tau=real(prior_std,'prior_std',1e-4,1e4)
     p=real(cut_probability,'cut_probability',1e-6,1-1e-6);minimum=integer(min_length,'min_length',1,n);cap=integer(max_segments,'max_segments',1,12)
     cap=min(cap,n//minimum)
-    scores={}
-    for start in range(n):
-        for end in range(start+minimum,n+1):scores[start,end]=segment_score(y[start:end],sigma,mu,tau)
+    scores,score_work=interval_table(y,sigma,mu,tau,minimum)
     forward=[[NEG]*(n+1) for _ in range(cap+1)];backward=[[NEG]*(n+1) for _ in range(cap+1)]
     best=[[NEG]*(n+1) for _ in range(cap+1)];pointer={};forward[0][0]=0.;best[0][0]=0.;backward[0][n]=0.
     counts=[[0]*(n+1) for _ in range(cap+1)];counts[0][0]=1
@@ -84,7 +105,7 @@ def infer(data,noise_std=.5,prior_mean=0.,prior_std=3.,cut_probability=.08,min_l
         start=pointer[kk,end];parts.append({'start':start,'end':end,**scores[start,end]});end=start;kk-=1
     parts.reverse();expected_segments=math.fsum(k['segments']*k['posterior_probability'] for k in count_probs)
     if max(abs(s['segment_coverage_mass']-1) for s in pointwise)>1e-8 or abs(math.fsum(k['posterior_probability'] for k in count_probs)-1)>1e-8:raise ValueError('partition probabilities numerically unresolved; rescale data or noise')
-    return {'data':y,'settings':{'noise_std':sigma,'prior_mean':mu,'prior_std':tau,'cut_probability':p,'min_length':minimum,'max_segments_requested':max_segments,'max_segments_effective':cap},
+    return {'score_work':score_work,'data':y,'settings':{'noise_std':sigma,'prior_mean':mu,'prior_std':tau,'cut_probability':p,'min_length':minimum,'max_segments_requested':max_segments,'max_segments_effective':cap},
             'log_prior_admissibility_mass':prior_z,'log_marginal_likelihood':joint_z-prior_z,
             'partition_count':sum(counts[k][n] for k in range(1,cap+1)),
             'segment_count_posterior':count_probs,'boundaries':[{'cut_before_index':j,'posterior_probability':boundary[j]} for j in range(1,n)],
