@@ -8,6 +8,7 @@ from .demo import demo
 from .information import partition_information
 from .joint import joint_cuts
 from .sampling import sample_posterior
+from .predictive import posterior_predictive
 
 
 MODEL_FIELDS=frozenset({
@@ -28,6 +29,7 @@ def build_parser():
         'sample':'seeded complete-partition and conditional Gaussian mean draws',
         'joint':'joint inclusion and conditional probabilities for requested cut pairs',
         'information':'full partition entropy, conditioned-prior KL and cut dependence',
+        'predictive':'same-design replicate mixture density, tails and marginal quantiles',
         'decide':'constrained minimum posterior expected false/missed boundary loss',
     }
     for name,description in descriptions.items():
@@ -38,6 +40,8 @@ def build_parser():
             command.add_argument('--seed',type=int,default=0,help='local RNG seed,0..2**32-1 (default:0)')
         elif name=='joint':
             command.add_argument('--pairs',required=True,help='JSON list of1..64 unique[a,b] interior gaps,1<=a<b<N; other cuts allowed')
+        elif name=='predictive':
+            command.add_argument('--queries',required=True,help='JSON list of1..64 unique[index,value] pairs; index0..N-1, value[-1e6,1e6]; not forecasts')
         elif name=='decide':
             command.add_argument('--false-cut-cost',type=float,default=1.,help='relative loss for a false cut,1e-6..1e6 (default:1); not money')
             command.add_argument('--missed-cut-cost',type=float,default=1.,help='relative loss for a missed cut,1e-6..1e6 (default:1); not money')
@@ -64,6 +68,8 @@ def dispatch(args):
         return joint_cuts(**model,pairs=json.loads(args.pairs))
     if args.command=='information':
         return partition_information(**model)
+    if args.command=='predictive':
+        return posterior_predictive(**model,queries=json.loads(args.queries))
     if args.command=='decide':
         return boundary_decision(**model,false_cut_cost=args.false_cut_cost,missed_cut_cost=args.missed_cut_cost)
     raise ValueError('unknown command')
