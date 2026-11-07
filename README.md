@@ -72,7 +72,7 @@ These are selected development examples, not held-out performance, event detecti
 
 ## Replicate uncertainty is a mixture
 
-`predictive` integrates over covering segments and their Gaussian mean posteriors, then adds fresh observation noise. At an existing index, latent variance and replicate variance are different. A Gaussian with matching mean/variance need not match the mixture density: in a selected five-point outlier fixture, its log density at2 is1.54 nats higher than the exact mixture. [Inputs, two-prior comparison and numerical quantile audit](DESIGN.md#same-design-replicate-predictive-mixtures). Fit uses all observations, including the queried index. These are not forecasts, leave-one-out scores, anomaly p-values or coverage claims.
+`predictive` integrates over covering segments and their Gaussian mean posteriors, then adds fresh observation noise. At an existing index, latent variance and replicate variance are different. A Gaussian with matching mean/variance need not match the mixture density: in a selected five-point outlier fixture, its log density at 2 is 1.54 nats higher than the exact mixture. [Inputs, two-prior comparison and numerical quantile audit](DESIGN.md#same-design-replicate-predictive-mixtures). Fit uses all observations, including the queried index. These are not forecasts, leave-one-out scores, anomaly p-values or coverage claims.
 
 ## Complete paths versus marginal averages
 
