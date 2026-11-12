@@ -11,3 +11,6 @@ license = {text = "MIT"}
 
 [project.scripts]
 segmentlab = "segmentlab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["segmentlab*"]
